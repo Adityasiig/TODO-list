@@ -1,0 +1,45 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Create static build
+        run: |
+          # Create a simple static version for GitHub Pages
+          mkdir -p build
+          cp -r public/* build/
+          cp views/*.ejs build/
+          # Convert main page to HTML
+          node -e "
+            const fs = require('fs');
+            const ejs = require('ejs');
+            const template = fs.readFileSync('views/index.ejs', 'utf8');
+            const html = ejs.render(template, { 
+              todos: require('./data/todos.json') || [],
+              error: null,
+              success: null
+            });
+            fs.writeFileSync('build/index.html', html);
+          "
+          
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build 
