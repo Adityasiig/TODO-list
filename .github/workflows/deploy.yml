@@ -17,304 +17,58 @@ jobs:
         with:
           node-version: '16'
           
-      - name: Install dependencies
-        run: npm ci
-        
-      - name: Create static build
+      - name: Create simple build
         run: |
-          # Create a simple static version for GitHub Pages
           mkdir -p build
-          cp -r public/* build/
+          cp -r public build/
+          cp -r *.html build/
+          cp .nojekyll build/
           
-          # Create data directory if it doesn't exist
-          mkdir -p data
-          
-          # Ensure todos.json exists with empty array if not
-          if [ ! -f data/todos.json ]; then
-            echo "[]" > data/todos.json
-          fi
-          
-          # Create a client-side version of the app
+          # Create simple index.html
           cat > build/index.html << 'EOL'
           <!DOCTYPE html>
-          <html lang="en">
+          <html>
           <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>TODO List</title>
-            <link rel="stylesheet" href="css/styles.css">
+              <title>TODO List App - Simple Version</title>
+              <style>
+                  body {
+                      font-family: Arial, sans-serif;
+                      max-width: 800px;
+                      margin: 0 auto;
+                      padding: 20px;
+                      text-align: center;
+                  }
+                  h1 {
+                      color: #0366d6;
+                  }
+                  .button {
+                      display: inline-block;
+                      padding: 10px 20px;
+                      margin-top: 20px;
+                      background-color: #0366d6;
+                      color: white;
+                      border-radius: 4px;
+                      text-decoration: none;
+                      transition: background-color 0.2s;
+                  }
+                  .button:hover {
+                      background-color: #0255b3;
+                  }
+              </style>
           </head>
           <body>
-            <!-- Animated background bubbles -->
-            <div class="bubbles">
-              <div class="bubble"></div>
-              <div class="bubble"></div>
-              <div class="bubble"></div>
-              <div class="bubble"></div>
-              <div class="bubble"></div>
-              <div class="bubble"></div>
-              <div class="bubble"></div>
-            </div>
-            
-            <!-- Animated background shapes -->
-            <div class="shapes">
-              <div class="shape shape-1"></div>
-              <div class="shape shape-2"></div>
-              <div class="shape shape-3"></div>
-              <div class="shape shape-4"></div>
-            </div>
-
-            <div class="page-wrapper">
-              <div class="container">
-                <h1>TODO List</h1>
-                
-                <form id="todo-form" class="todo-form">
-                  <input type="text" id="task-input" placeholder="Add a new task..." required>
-                  <button type="submit">Add</button>
-                </form>
-                
-                <div id="todo-list" class="todo-list">
-                  <p class="empty-message">No tasks yet. Add a task to get started!</p>
-                </div>
+              <h1>TODO List App</h1>
+              <p>Simple version for testing GitHub Pages deployment.</p>
+              <p>Deployment timestamp: $(date)</p>
+              
+              <div>
+                  <h2>Test Links:</h2>
+                  <p><a href="test.html">Test Page</a></p>
+                  <p><a href="direct-test.html">Direct Test Page</a></p>
               </div>
-              
-              <!-- Footer with website link and profile -->
-              <div class="footer">
-                <div class="created-by">Created by</div>
-                <div class="footer-profile">
-                  <img src="https://github.com/adityasiig.png" alt="Aditya Singh" class="profile-img">
-                  <a href="https://adityasiig.github.io/Portfolio/" target="_blank">Aditya Singh</a>
-                </div>
-              </div>
-            </div>
-            
-            <script>
-            // Client-side storage for the static GitHub Pages version
-            document.addEventListener('DOMContentLoaded', () => {
-              // Get todos from localStorage
-              const getTodos = () => {
-                try {
-                  return JSON.parse(localStorage.getItem('todos') || '[]');
-                } catch (e) {
-                  return [];
-                }
-              };
-
-              // Save todos to localStorage
-              const saveTodos = (todos) => {
-                localStorage.setItem('todos', JSON.stringify(todos));
-              };
-
-              // Initial state
-              let todos = getTodos();
-              
-              // Render todos
-              const renderTodos = () => {
-                const todoList = document.getElementById('todo-list');
-                
-                if (todos.length === 0) {
-                  todoList.innerHTML = '<p class="empty-message">No tasks yet. Add a task to get started!</p>';
-                  return;
-                }
-                
-                let html = '<ul>';
-                todos.forEach(todo => {
-                  html += `
-                    <li class="todo-item ${todo.completed ? 'completed' : ''}" data-id="${todo.id}">
-                      <span class="todo-text">${todo.task}</span>
-                      <div class="todo-actions">
-                        <a href="#" class="toggle-btn">${todo.completed ? '✓' : '○'}</a>
-                        <a href="#" class="delete-btn">×</a>
-                      </div>
-                    </li>
-                  `;
-                });
-                html += '</ul>';
-                
-                todoList.innerHTML = html;
-                
-                // Add event listeners
-                document.querySelectorAll('.toggle-btn').forEach(btn => {
-                  btn.addEventListener('click', toggleTodo);
-                });
-                
-                document.querySelectorAll('.delete-btn').forEach(btn => {
-                  btn.addEventListener('click', deleteTodo);
-                });
-                
-                animateExistingTodos();
-              };
-              
-              // Animate existing todo items with a staggered delay
-              function animateExistingTodos() {
-                const todoItems = document.querySelectorAll('.todo-item');
-                todoItems.forEach((item, index) => {
-                  item.style.opacity = '0';
-                  item.style.transform = 'translateY(20px)';
-                  
-                  setTimeout(() => {
-                    item.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-                    item.style.opacity = '1';
-                    item.style.transform = 'translateY(0)';
-                  }, 50 * index);
-                });
-              }
-              
-              // Add a todo
-              const addTodo = (e) => {
-                e.preventDefault();
-                
-                const input = document.getElementById('task-input');
-                const task = input.value.trim();
-                
-                if (!task) return;
-                
-                const newTodo = {
-                  id: Date.now().toString(),
-                  task,
-                  completed: false,
-                  createdAt: new Date().toISOString()
-                };
-                
-                todos.push(newTodo);
-                saveTodos(todos);
-                renderTodos();
-                
-                input.value = '';
-                input.focus();
-                
-                // Show success animation
-                const form = document.getElementById('todo-form');
-                form.classList.add('success');
-                setTimeout(() => form.classList.remove('success'), 1000);
-              };
-              
-              // Toggle todo completion
-              const toggleTodo = (e) => {
-                e.preventDefault();
-                
-                const li = e.target.closest('.todo-item');
-                const id = li.dataset.id;
-                
-                todos = todos.map(todo => {
-                  if (todo.id === id) {
-                    return { ...todo, completed: !todo.completed };
-                  }
-                  return todo;
-                });
-                
-                saveTodos(todos);
-                renderTodos();
-                
-                // Show confetti if completing
-                if (todos.find(todo => todo.id === id).completed) {
-                  const rect = e.target.getBoundingClientRect();
-                  showConfetti(rect.left + rect.width / 2, rect.top + rect.height / 2);
-                }
-              };
-              
-              // Delete a todo
-              const deleteTodo = (e) => {
-                e.preventDefault();
-                
-                const li = e.target.closest('.todo-item');
-                const id = li.dataset.id;
-                
-                // Animate removal
-                li.classList.add('shake');
-                
-                setTimeout(() => {
-                  todos = todos.filter(todo => todo.id !== id);
-                  saveTodos(todos);
-                  renderTodos();
-                }, 300);
-              };
-              
-              // Show confetti effect
-              function showConfetti(x, y) {
-                const colors = ['#3498db', '#2ecc71', '#e74c3c', '#f1c40f', '#9b59b6'];
-                const confettiCount = 30;
-                
-                for (let i = 0; i < confettiCount; i++) {
-                  const confetti = document.createElement('div');
-                  confetti.className = 'confetti';
-                  confetti.style.position = 'fixed';
-                  confetti.style.zIndex = '1000';
-                  confetti.style.width = `${5 + Math.random() * 5}px`;
-                  confetti.style.height = confetti.style.width;
-                  confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                  confetti.style.borderRadius = '50%';
-                  confetti.style.left = `${x}px`;
-                  confetti.style.top = `${y}px`;
-                  
-                  document.body.appendChild(confetti);
-                  
-                  const angle = Math.random() * Math.PI * 2;
-                  const distance = 40 + Math.random() * 60;
-                  const destX = distance * Math.cos(angle);
-                  const destY = distance * Math.sin(angle);
-                  
-                  confetti.style.transition = 'all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1)';
-                  
-                  setTimeout(() => {
-                    confetti.style.opacity = '0';
-                    confetti.style.transform = `translate(${destX}px, ${destY}px) rotate(${Math.random() * 360}deg)`;
-                  }, 10);
-                  
-                  setTimeout(() => {
-                    document.body.removeChild(confetti);
-                  }, 600);
-                }
-              }
-              
-              // Set up event listeners
-              document.getElementById('todo-form').addEventListener('submit', addTodo);
-              
-              // Initial render
-              renderTodos();
-              
-              // Add CSS for additional animations
-              const style = document.createElement('style');
-              style.innerHTML = `
-                .confetti {
-                  position: fixed;
-                  z-index: 1000;
-                  width: 10px;
-                  height: 10px;
-                  opacity: 1;
-                  pointer-events: none;
-                  border-radius: 2px;
-                }
-                
-                @keyframes shake {
-                  0%, 100% { transform: translateX(0); }
-                  25% { transform: translateX(-5px); }
-                  75% { transform: translateX(5px); }
-                }
-                
-                .shake {
-                  animation: shake 0.4s ease-in-out;
-                }
-                
-                @keyframes success {
-                  0% { transform: scale(1); }
-                  50% { transform: scale(1.05); }
-                  100% { transform: scale(1); }
-                }
-                
-                .success {
-                  animation: success 0.5s ease-in-out;
-                }
-              `;
-              document.head.appendChild(style);
-            });
-            </script>
           </body>
           </html>
           EOL
-          
-          # Copy files for GitHub Pages
-          cp build/index.html build/404.html
           
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
