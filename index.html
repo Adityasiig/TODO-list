@@ -1,57 +1,260 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TODO List App</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
         }
+        
         .container {
-            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
             padding: 20px;
-            border-radius: 8px;
             background-color: white;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            max-width: 600px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            margin-top: 50px;
         }
+        
+        h1 {
+            color: #3498db;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        .todo-form {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .todo-form input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            font-size: 16px;
+        }
+        
+        .todo-form button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .todo-form button:hover {
+            background-color: #2980b9;
+        }
+        
+        .todo-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .todo-item {
+            background-color: #f9f9f9;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .todo-item.completed {
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+        
+        .todo-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .todo-actions button {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        
+        .complete-btn {
+            color: #27ae60;
+        }
+        
+        .delete-btn {
+            color: #e74c3c;
+        }
+        
+        .no-todos {
+            text-align: center;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #7f8c8d;
+        }
+        
         a {
-            color: #0366d6;
+            color: #3498db;
             text-decoration: none;
         }
+        
         a:hover {
             text-decoration: underline;
         }
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            margin-top: 20px;
-            background-color: #0366d6;
-            color: white;
-            border-radius: 4px;
-            text-decoration: none;
-            transition: background-color 0.2s;
+
+        .test-links {
+            margin-top: 30px;
+            text-align: center;
         }
-        .button:hover {
-            background-color: #0255b3;
-            text-decoration: none;
+        
+        .test-links a {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 5px 10px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>TODO List App</h1>
-        <p>This is a beautifully designed and feature-rich TODO list application with a responsive UI, client-side data persistence, and animated backgrounds.</p>
-        <p>The application is hosted on GitHub Pages and uses browser local storage to save your tasks.</p>
-        <a href="https://Adityasiig.github.io/TODO-list/" class="button">View App</a>
-        <p style="margin-top: 20px;">Created by <a href="https://adityasiig.github.io/Portfolio/" target="_blank">Aditya Singh</a></p>
+        
+        <div id="app">
+            <form id="todo-form" class="todo-form">
+                <input type="text" id="new-todo" placeholder="Add a new task..." required>
+                <button type="submit">Add</button>
+            </form>
+            
+            <div id="todos-container">
+                <p class="no-todos">No tasks yet. Add a task to get started!</p>
+                <ul id="todo-list" class="todo-list"></ul>
+            </div>
+            
+            <div class="test-links">
+                <p>Test Pages:</p>
+                <a href="test.html">Test Page</a>
+                <a href="direct-test.html">Direct Test Page</a>
+            </div>
+        </div>
+        
+        <footer>
+            Created by <a href="https://adityasiig.github.io/Portfolio/" target="_blank">Aditya Singh</a>
+        </footer>
     </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('todo-form');
+            const input = document.getElementById('new-todo');
+            const todoList = document.getElementById('todo-list');
+            const todosContainer = document.getElementById('todos-container');
+            const noTodosMessage = document.querySelector('.no-todos');
+            
+            // Load todos from localStorage
+            let todos = JSON.parse(localStorage.getItem('todos') || '[]');
+            
+            // Render initial todos
+            renderTodos();
+            
+            // Add todo form submit
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const todoText = input.value.trim();
+                if (todoText === '') return;
+                
+                // Create new todo
+                const newTodo = {
+                    id: Date.now().toString(),
+                    text: todoText,
+                    completed: false
+                };
+                
+                // Add to array and save
+                todos.push(newTodo);
+                saveTodos();
+                
+                // Clear input
+                input.value = '';
+                input.focus();
+                
+                // Render todos
+                renderTodos();
+            });
+            
+            // Handle todo actions (using event delegation)
+            todoList.addEventListener('click', function(e) {
+                const target = e.target;
+                const todoItem = target.closest('.todo-item');
+                
+                if (!todoItem) return;
+                
+                const todoId = todoItem.dataset.id;
+                
+                if (target.classList.contains('complete-btn')) {
+                    // Toggle completion
+                    todos = todos.map(todo => {
+                        if (todo.id === todoId) {
+                            return { ...todo, completed: !todo.completed };
+                        }
+                        return todo;
+                    });
+                    
+                    saveTodos();
+                    renderTodos();
+                } else if (target.classList.contains('delete-btn')) {
+                    // Delete todo
+                    todos = todos.filter(todo => todo.id !== todoId);
+                    saveTodos();
+                    renderTodos();
+                }
+            });
+            
+            // Save todos to localStorage
+            function saveTodos() {
+                localStorage.setItem('todos', JSON.stringify(todos));
+            }
+            
+            // Render todos
+            function renderTodos() {
+                if (todos.length === 0) {
+                    noTodosMessage.style.display = 'block';
+                    todoList.innerHTML = '';
+                    return;
+                }
+                
+                noTodosMessage.style.display = 'none';
+                
+                // Render todos
+                todoList.innerHTML = todos.map(todo => `
+                    <li class="todo-item ${todo.completed ? 'completed' : ''}" data-id="${todo.id}">
+                        <span>${todo.text}</span>
+                        <div class="todo-actions">
+                            <button class="complete-btn">${todo.completed ? '✓' : '○'}</button>
+                            <button class="delete-btn">×</button>
+                        </div>
+                    </li>
+                `).join('');
+            }
+        });
+    </script>
 </body>
 </html> 
