@@ -20,7 +20,7 @@ A beautifully designed and feature-rich TODO list application with a responsive 
 
 ## Live Demo
 
-Visit the live application at: [https://yourusername.github.io/your-repo-name/](https://yourusername.github.io/your-repo-name/)
+Visit the live application at: [https://Adityasiig.github.io/TODO-list/](https://Adityasiig.github.io/TODO-list/)
 
 ## Installation and Running
 
