@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TODO List App</title>
-    <meta http-equiv="refresh" content="0;url=https://Adityasiig.github.io/TODO-list/" />
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -21,6 +20,7 @@
             border-radius: 8px;
             background-color: white;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 600px;
         }
         a {
             color: #0366d6;
@@ -29,12 +29,29 @@
         a:hover {
             text-decoration: underline;
         }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #0366d6;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+        .button:hover {
+            background-color: #0255b3;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>TODO List App</h1>
-        <p>If you are not redirected automatically, <a href="https://Adityasiig.github.io/TODO-list/">click here</a>.</p>
+        <p>This is a beautifully designed and feature-rich TODO list application with a responsive UI, client-side data persistence, and animated backgrounds.</p>
+        <p>The application is hosted on GitHub Pages and uses browser local storage to save your tasks.</p>
+        <a href="https://Adityasiig.github.io/TODO-list/" class="button">View App</a>
+        <p style="margin-top: 20px;">Created by <a href="https://adityasiig.github.io/Portfolio/" target="_blank">Aditya Singh</a></p>
     </div>
 </body>
 </html> 
