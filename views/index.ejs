@@ -72,7 +72,7 @@
                   <button type="button" class="toggle-btn" data-id="<%= todo.id %>">
                     <%= todo.completed ? '✓' : '○' %>
                   </button>
-                  <button type="button" class="delete-btn" data-id="<%= todo.id %>"></button>
+                  <button type="button" class="delete-btn" data-id="<%= todo.id %>">x</button>
                 </div>
               </li>
             <% }); %>
@@ -85,7 +85,7 @@
       <div id="task-summary" class="task-summary fade-in">
         <p><span id="completed-count"><%= todos.filter(t => t.completed).length %></span> completed / <span id="total-count"><%= todos.length %></span> total tasks</p>
         <div id="progress-bar">
-          <div id="progress" style="width: <%= Math.round((todos.filter(t => t.completed).length / todos.length) * 100) %>%"></div>
+          <div id="progress" data-completed="<%= todos.filter(t => t.completed).length %>" data-total="<%= todos.length %>"></div>
         </div>
       </div>
       <% } %>
@@ -102,5 +102,17 @@
   </div>
   
   <script src="/js/app.js"></script>
+  <script>
+    // Initialize progress bar width
+    document.addEventListener('DOMContentLoaded', function() {
+      const progressBar = document.getElementById('progress');
+      if (progressBar) {
+        const completed = parseInt(progressBar.dataset.completed) || 0;
+        const total = parseInt(progressBar.dataset.total) || 1;
+        const percentage = Math.round((completed / total) * 100);
+        progressBar.style.width = percentage + '%';
+      }
+    });
+  </script>
 </body>
 </html> 

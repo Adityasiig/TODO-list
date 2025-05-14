@@ -50,7 +50,6 @@
       transform: translateY(-2px);
     }
     
-    <% if (process.env.NODE_ENV === 'development') { %>
     .error-details {
       margin-top: 40px;
       text-align: left;
@@ -61,8 +60,8 @@
       overflow-x: auto;
       font-family: monospace;
       color: #e74c3c;
+      display: none;
     }
-    <% } %>
   </style>
 </head>
 <body>
@@ -74,7 +73,7 @@
       <a href="/" class="home-button">Return to Home</a>
       
       <% if (process.env.NODE_ENV === 'development' && error && error.stack) { %>
-      <div class="error-details">
+      <div class="error-details" style="display: block;">
         <h2>Error Details:</h2>
         <%= error.stack %>
       </div>
