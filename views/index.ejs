@@ -3,8 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TODO List</title>
+  <title>TODO List App</title>
+  <!-- Open Graph meta tags for link previews -->
+  <meta property="og:title" content="TODO List App">
+  <meta property="og:description" content="A beautiful and interactive TODO list application to manage your tasks">
+  <meta property="og:image" content="images/favicon-512.png">
+  <meta property="og:url" content="https://adityasiig.github.io/TODO-list/">
+  <meta property="og:type" content="website">
+  
+  <!-- Twitter card tags for Twitter link previews -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TODO List App">
+  <meta name="twitter:description" content="A beautiful and interactive TODO list application to manage your tasks">
+  <meta name="twitter:image" content="images/favicon-512.png">
+  
+  <!-- Meta description for search engines -->
+  <meta name="description" content="A beautiful and interactive TODO list application to manage your tasks efficiently">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="/images/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="/images/favicon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
+  <meta name="theme-color" content="#3498db">
   <link rel="stylesheet" href="/css/styles.css">
+  <link rel="manifest" href="/manifest.json">
 </head>
 <body>
   <!-- Animated background bubbles -->
@@ -44,16 +69,26 @@
               <li class="todo-item <%= todo.completed ? 'completed' : '' %>" data-id="<%= todo.id %>">
                 <span class="todo-text"><%= todo.task %></span>
                 <div class="todo-actions">
-                  <a href="/toggle/<%= todo.id %>" class="toggle-btn">
+                  <button type="button" class="toggle-btn" data-id="<%= todo.id %>">
                     <%= todo.completed ? '✓' : '○' %>
-                  </a>
-                  <a href="/delete/<%= todo.id %>" class="delete-btn">×</a>
+                  </button>
+                  <button type="button" class="delete-btn" data-id="<%= todo.id %>"></button>
                 </div>
               </li>
             <% }); %>
           </ul>
         <% } %>
       </div>
+      
+      <!-- Task summary section -->
+      <% if (todos.length > 0) { %>
+      <div id="task-summary" class="task-summary fade-in">
+        <p><span id="completed-count"><%= todos.filter(t => t.completed).length %></span> completed / <span id="total-count"><%= todos.length %></span> total tasks</p>
+        <div id="progress-bar">
+          <div id="progress" style="width: <%= Math.round((todos.filter(t => t.completed).length / todos.length) * 100) %>%"></div>
+        </div>
+      </div>
+      <% } %>
     </div>
     
     <!-- Footer with website link and profile -->
@@ -66,6 +101,6 @@
     </div>
   </div>
   
-  <script src="/js/main.js"></script>
+  <script src="/js/app.js"></script>
 </body>
 </html> 

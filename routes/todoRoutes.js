@@ -49,6 +49,12 @@ router.get('/', (req, res) => {
   res.render('index', { todos });
 });
 
+// API: Get all todos as JSON
+router.get('/api/todos', (req, res) => {
+  const todos = readTodos();
+  res.json({ todos });
+});
+
 // Add a new todo
 router.post('/add', (req, res) => {
   console.log("Received add request with body:", req.body);
@@ -78,6 +84,32 @@ router.post('/add', (req, res) => {
   res.redirect('/');
 });
 
+// API: Add a new todo via API
+router.post('/api/todos', (req, res) => {
+  const { task } = req.body;
+  
+  if (!task || task.trim() === '') {
+    return res.status(400).json({ 
+      success: false, 
+      error: 'Task text is required' 
+    });
+  }
+  
+  const todos = readTodos();
+  
+  const newTodo = {
+    id: Date.now().toString(),
+    task,
+    completed: false,
+    createdAt: new Date()
+  };
+  
+  todos.push(newTodo);
+  writeTodos(todos);
+  
+  res.status(201).json({ success: true, todo: newTodo });
+});
+
 // Toggle todo completion status
 router.post('/toggle/:id', (req, res) => {
   const { id } = req.params;
@@ -101,6 +133,39 @@ router.post('/toggle/:id', (req, res) => {
   }
   
   res.redirect('/');
+});
+
+// API: Update a todo's status
+router.put('/api/todos/:id', (req, res) => {
+  const { id } = req.params;
+  const { completed } = req.body;
+  
+  if (completed === undefined) {
+    return res.status(400).json({ 
+      success: false, 
+      error: 'Completion status is required' 
+    });
+  }
+  
+  let todos = readTodos();
+  let updatedTodo = null;
+  let found = false;
+  
+  todos = todos.map(todo => {
+    if (todo.id === id) {
+      found = true;
+      updatedTodo = { ...todo, completed };
+      return updatedTodo;
+    }
+    return todo;
+  });
+  
+  if (!found) {
+    return res.status(404).json({ success: false, error: 'Todo not found' });
+  }
+  
+  writeTodos(todos);
+  res.json({ success: true, todo: updatedTodo });
 });
 
 // For backward compatibility
@@ -136,6 +201,22 @@ router.post('/delete/:id', (req, res) => {
   }
   
   res.redirect('/');
+});
+
+// API: Delete a todo via API
+router.delete('/api/todos/:id', (req, res) => {
+  const { id } = req.params;
+  let todos = readTodos();
+  
+  const initialLength = todos.length;
+  todos = todos.filter(todo => todo.id !== id);
+  
+  if (todos.length === initialLength) {
+    return res.status(404).json({ success: false, error: 'Todo not found' });
+  }
+  
+  writeTodos(todos);
+  res.json({ success: true });
 });
 
 // For backward compatibility
