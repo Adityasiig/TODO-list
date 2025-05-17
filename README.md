@@ -1,74 +1,92 @@
 # TODO List Application
 
-A beautifully designed and feature-rich TODO list application with a responsive UI, data persistence, animations, and interactive features. The project is organized into separate frontend and backend components for better maintainability and deployment flexibility.
+A simple and efficient TODO list application with a clean user interface. This project features both a static frontend for GitHub Pages and a Node.js backend for enhanced functionality.
 
-## Features
+## 🌟 Features
 
-- **Modern Design**: Clean, responsive interface with smooth animations
-- **Data Persistence**: Tasks remain saved even after closing the application
-- **Real-time Interactions**: Add, complete, and delete tasks without page reloads
-- **Animated Background**: Beautiful gradients, floating bubbles, and animated shapes
-- **Dark Mode Support**: Automatically adapts to your system's dark mode preference
-- **Mobile Responsive**: Works flawlessly on all devices
-- **3D Effects**: Tilt effects and interactive hover states for buttons and cards
-- **Sound Effects**: Subtle audio feedback for task completion and actions
-- **Visual Feedback**: Ripple effects, celebrations, and visual cues for user actions
-- **Keyboard Shortcuts**: Improved accessibility and productivity
-- **Social Sharing**: Optimized link previews when sharing on social platforms
-- **Web App Support**: Can be added to home screen on mobile devices
+- Create, edit, and delete tasks
+- Mark tasks as complete/incomplete
+- Clean and responsive user interface
+- Data persistence using localStorage
+- Real-time updates
+- Mobile-friendly design
 
-## Technology Stack
+## 🔗 Live Demo
 
-- **Frontend**: HTML5, CSS3 (with animations), JavaScript (ES6+)
-- **Backend**: Node.js, Express.js
-- **Templating**: EJS
-- **Data Storage**: JSON-based file system for persistence
-- **Web APIs**: Web Audio, LocalStorage, Touch Events
+Visit the live application: [TODO List App](https://adityasiig.github.io/TODO-list/)
 
-## Live Demo
+## 🛠️ Technology Stack
 
-Visit the live application at: [https://Adityasiig.github.io/TODO-list/](https://Adityasiig.github.io/TODO-list/)
+### Frontend
+- HTML5
+- CSS3
+- JavaScript (ES6+)
+- Local Storage for data persistence
 
-## Project Structure
+### Backend
+- Node.js
+- Express.js
+- JSON for data storage
 
-The project is organized into two main components:
+## 📁 Project Structure
 
 ```
-TodoList/
-├── live-demo-code/           # Frontend code (for GitHub Pages)
-│   ├── index.html           # Main HTML file
-│   ├── css/                 # CSS styling
-│   │   └── styles.css
-│   ├── js/                  # Client-side JavaScript
-│   │   └── app.js
-│   ├── images/             # Image assets
-│   │   ├── favicon.svg
-│   │   └── favicon-*.png
-│   ├── public/             # Public assets
-│   └── manifest.json       # Web app manifest
+T```
+live-demo-code/
+├── css/                            # Contains global styles (can be merged with public/css if needed)
+│   └── styles.css
+├── images/                         # Shared image assets used across the project
+│   ├── favicon-16.png
+│   ├── favicon-32.png
+│   ├── favicon-192.png
+│   ├── favicon-512.png
+│   ├── favicon.ico
+│   └── favicon.svg
 │
-├── server-side/            # Backend code
-│   ├── app.js             # Express server entry point
-│   ├── routes/            # API routes
-│   │   └── todoRoutes.js
-│   ├── views/             # EJS templates
-│   │   ├── index.ejs
-│   │   └── error.ejs
-│   └── data/              # Data storage
-│       └── todos.json
+├── js/                             # Standalone JavaScript files for general logic or components
+│   └── app.js
 │
-├── package.json           # Project dependencies
-└── README.md             # Project documentation
+├── public/                         # Static files served directly to the client
+│   ├── css/
+│   │   └── styles.css              # Public-facing CSS
+│   ├── images/                     # Public-facing images like favicons
+│   │   ├── favicon-16.png
+│   │   ├── favicon-32.png
+│   │   ├── favicon-192.png
+│   │   ├── favicon-512.png
+│   │   ├── favicon.ico
+│   │   └── favicon.svg
+│   ├── js/
+│   │   ├── app.js                  # Public-facing JavaScript
+│   │   └── main.js                 # Additional JS logic (e.g., interactivity)
+│   ├── app.html                    # Main HTML for PWA (Progressive Web App)
+│   └── manifest.json               # Web app manifest for PWA settings and metadata
+│
+├── server-side/                    # Server-side code (Node.js/Express logic)
+│   ├── data/
+│   │   └── todos.json              # Example data storage (could simulate a database)
+│   ├── routes/
+│   │   └── todoRoutes.js           # API route handling for todo-related endpoints
+│   └── views/                      # Templating files using EJS for server-rendered views
+│       ├── error.ejs
+│       └── index.ejs
+│
+├── app.js                          # Main entry point for the server-side application (Express.js)
+├── index.html                      # Primary HTML file for the website (non-PWA entry)
+├── package.json                    # Project configuration and dependencies
+├── package-lock.json               # Locks dependency versions for reproducibility
+└── README.md                       # Project overview, instructions, and documentation
 ```
 
-## Installation and Setup
 
-### Frontend Only (GitHub Pages Version)
-1. The frontend is automatically deployed to GitHub Pages
-2. Visit [https://Adityasiig.github.io/TODO-list/](https://Adityasiig.github.io/TODO-list/)
-3. This version uses localStorage for data persistence
+## 🚀 Getting Started
 
-### Full Stack Version (with Backend)
+### Static Version (Frontend Only)
+1. Visit [https://adityasiig.github.io/TODO-list/](https://adityasiig.github.io/TODO-list/)
+2. Start managing your tasks immediately
+3. Your data will be saved in your browser's localStorage
+
+### Local Development Setup
 1. Clone the repository:
    ```bash
    git clone https://github.com/Adityasiig/TODO-list.git
@@ -82,54 +100,26 @@ TodoList/
 
 3. Start the server:
    ```bash
-   node server-side/app.js
+   npm start
    ```
 
-4. Open your browser and visit `http://localhost:3000`
+4. Open your browser and visit:
+   - Frontend: [http://localhost:3000](http://localhost:3000)
 
-## Development
+## 👨‍💻 Author
 
-- **Frontend Development**: Work in the `live-demo-code/` directory
-  - Contains all client-side code
-  - Can be served statically
-  - Uses localStorage for data persistence
+Created by [Aditya Singh](https://adityasiig.github.io/Portfolio/)
 
-- **Backend Development**: Work in the `server-side/` directory
-  - Contains Express.js server code
-  - Handles API routes and data storage
-  - Uses JSON file for data persistence
+## 📄 License
 
-## Implementation Details
+This project is open source and available under the [MIT License](LICENSE).
 
-- **Non-reloading UI**: Used AJAX for seamless task management
-- **Optimized Animations**: Carefully crafted CSS and JavaScript animations for performance
-- **Responsive Layout**: Flexbox and media queries for all device sizes
-- **Error Handling**: Robust error handling for data operations
-- **Content Security Policy**: Fully compatible with strict CSP rules
-- **SEO & Social Sharing**: Open Graph and Twitter Card meta tags for rich previews
+## 🤝 Contributing
 
-## Technical Highlights
+Contributions are welcome! Feel free to:
 
-- **Separated Concerns**: Frontend and backend code are cleanly separated
-- **Dual Deployment**: Can be deployed as static site or full-stack application
-- **Event Delegation**: Efficient event handling without inline JavaScript
-- **Progressive Enhancement**: Core functionality works without JavaScript
-- **Web App Manifest**: Allows installation on mobile home screens
-- **Optimized Assets**: SVG-first approach with PNG fallbacks
-
-## Future Enhancements
-
-- User authentication
-- Categories and tags for tasks
-- Due dates and reminders
-- Drag and drop reordering
-- Offline support with Service Workers
-- Cloud synchronization
-
-## About the Author
-
-Developed by [Aditya Singh](https://adityasiig.github.io/Portfolio/) as a demonstration of modern web development techniques.
-
-## License
-
-This project is open-source and available under the MIT License. 
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
