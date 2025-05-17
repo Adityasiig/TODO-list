@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error - TODO List App</title>
+  <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    .error-container {
+      text-align: center;
+      padding: 40px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .error-icon {
+      font-size: 72px;
+      margin-bottom: 20px;
+      color: #e74c3c;
+    }
+    
+    .error-title {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #e74c3c;
+    }
+    
+    .error-message {
+      margin-bottom: 30px;
+    }
+    
+    .home-button {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    
+    .home-button:hover {
+      background: #2980b9;
+      transform: translateY(-2px);
+    }
+    
+    .error-details {
+      margin-top: 40px;
+      text-align: left;
+      background: rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      border-radius: 5px;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      font-family: monospace;
+      color: #e74c3c;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="container error-container">
+      <div class="error-icon">⚠️</div>
+      <h1 class="error-title">Something went wrong</h1>
+      <p class="error-message"><%= message %></p>
+      <a href="/" class="home-button">Return to Home</a>
+      
+      <% if (process.env.NODE_ENV === 'development' && error && error.stack) { %>
+      <div class="error-details" style="display: block;">
+        <h2>Error Details:</h2>
+        <%= error.stack %>
+      </div>
+      <% } %>
+    </div>
+  </div>
+  
+  <!-- Animated background bubbles -->
+  <div class="bubbles">
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+  </div>
+</body>
+</html> 
