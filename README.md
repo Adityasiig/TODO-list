@@ -1,6 +1,6 @@
 # TODO List Application
 
-A beautifully designed and feature-rich TODO list application with a responsive UI, data persistence, animations, and interactive features.
+A beautifully designed and feature-rich TODO list application with a responsive UI, data persistence, animations, and interactive features. The project is organized into separate frontend and backend components for better maintainability and deployment flexibility.
 
 ## Features
 
@@ -29,56 +29,75 @@ A beautifully designed and feature-rich TODO list application with a responsive 
 
 Visit the live application at: [https://Adityasiig.github.io/TODO-list/](https://Adityasiig.github.io/TODO-list/)
 
-## Installation and Running
+## Project Structure
 
-1. Clone the repository
-2. Install dependencies:
+The project is organized into two main components:
+
+```
+TodoList/
+├── live-demo-code/           # Frontend code (for GitHub Pages)
+│   ├── index.html           # Main HTML file
+│   ├── css/                 # CSS styling
+│   │   └── styles.css
+│   ├── js/                  # Client-side JavaScript
+│   │   └── app.js
+│   ├── images/             # Image assets
+│   │   ├── favicon.svg
+│   │   └── favicon-*.png
+│   ├── public/             # Public assets
+│   └── manifest.json       # Web app manifest
+│
+├── server-side/            # Backend code
+│   ├── app.js             # Express server entry point
+│   ├── routes/            # API routes
+│   │   └── todoRoutes.js
+│   ├── views/             # EJS templates
+│   │   ├── index.ejs
+│   │   └── error.ejs
+│   └── data/              # Data storage
+│       └── todos.json
+│
+├── package.json           # Project dependencies
+└── README.md             # Project documentation
+```
+
+## Installation and Setup
+
+### Frontend Only (GitHub Pages Version)
+1. The frontend is automatically deployed to GitHub Pages
+2. Visit [https://Adityasiig.github.io/TODO-list/](https://Adityasiig.github.io/TODO-list/)
+3. This version uses localStorage for data persistence
+
+### Full Stack Version (with Backend)
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Adityasiig/TODO-list.git
+   cd TODO-list
    ```
+
+2. Install dependencies:
+   ```bash
    npm install
    ```
-3. Start the application:
-   ```
-   npm start
-   ```
-   
-   For development with auto-restart:
-   ```
-   npm run dev
+
+3. Start the server:
+   ```bash
+   node server-side/app.js
    ```
 
 4. Open your browser and visit `http://localhost:3000`
 
-## GitHub Pages Deployment
+## Development
 
-This project is configured to automatically deploy to GitHub Pages:
+- **Frontend Development**: Work in the `live-demo-code/` directory
+  - Contains all client-side code
+  - Can be served statically
+  - Uses localStorage for data persistence
 
-1. The deployment uses GitHub Actions (see `.github/workflows/deploy.yml`)
-2. Each push to the main/master branch triggers a new deployment
-3. The static version is hosted on GitHub Pages
-4. You can manually trigger a deployment from the Actions tab in your repository
-
-## Project Structure
-
-```
-TodoList/
-├── app.js              # Main application entry point
-├── css/                # CSS styling for the app
-│   └── styles.css      # Main stylesheet
-├── data/
-│   └── todos.json      # JSON file for data persistence
-├── images/             # Image assets
-│   ├── favicon.svg     # Vector favicon
-│   ├── favicon-512.png # Favicon for social sharing
-│   └── favicon-*.png   # Various sizes for different devices
-├── js/
-│   └── app.js          # Client-side JavaScript
-├── manifest.json       # Web app manifest for mobile
-├── public/             # Static assets
-├── routes/
-│   └── todoRoutes.js   # Express routes for todo operations
-└── views/
-    └── index.ejs       # Main EJS template
-```
+- **Backend Development**: Work in the `server-side/` directory
+  - Contains Express.js server code
+  - Handles API routes and data storage
+  - Uses JSON file for data persistence
 
 ## Implementation Details
 
@@ -91,6 +110,8 @@ TodoList/
 
 ## Technical Highlights
 
+- **Separated Concerns**: Frontend and backend code are cleanly separated
+- **Dual Deployment**: Can be deployed as static site or full-stack application
 - **Event Delegation**: Efficient event handling without inline JavaScript
 - **Progressive Enhancement**: Core functionality works without JavaScript
 - **Web App Manifest**: Allows installation on mobile home screens
