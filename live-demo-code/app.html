@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO List App</title>
+    <!-- Open Graph meta tags for link previews -->
+    <meta property="og:title" content="TODO List App">
+    <meta property="og:description" content="A beautiful and interactive TODO list application to manage your tasks">
+    <meta property="og:image" content="images/favicon-512.png">
+    <meta property="og:url" content="https://adityasiig.github.io/TODO-list/">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter card tags for Twitter link previews -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="TODO List App">
+    <meta name="twitter:description" content="A beautiful and interactive TODO list application to manage your tasks">
+    <meta name="twitter:image" content="images/favicon-512.png">
+    
+    <!-- Meta description for search engines -->
+    <meta name="description" content="A beautiful and interactive TODO list application to manage your tasks efficiently">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
+    <link rel="alternate icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="/images/favicon-192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
+    <meta name="theme-color" content="#3498db">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <!-- Animated background bubbles -->
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+    
+    <!-- Animated background shapes -->
+    <div class="shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+    </div>
+
+    <div class="page-wrapper">
+        <div class="container">
+            <h1>TODO List</h1>
+            
+            <form id="todo-form" class="todo-form">
+                <input type="text" id="task-input" placeholder="Add a new task..." required>
+                <button type="submit">Add</button>
+            </form>
+            
+            <div id="todo-list" class="todo-list">
+                <p class="empty-message">No tasks yet. Add a task to get started!</p>
+            </div>
+            
+            <!-- Task summary section -->
+            <div id="task-summary" class="task-summary fade-in" style="display: none; margin-top: 20px; padding: 15px; background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(46, 204, 113, 0.1)); border-radius: var(--radius); text-align: center; backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.3);">
+                <p><span id="completed-count">0</span> completed / <span id="total-count">0</span> total tasks</p>
+                <div id="progress-bar" style="height: 6px; background: rgba(255, 255, 255, 0.3); border-radius: 3px; margin-top: 8px; overflow: hidden;">
+                    <div id="progress" style="height: 100%; width: 0%; background: var(--success-color); transition: width 0.5s ease;"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer with website link and profile -->
+        <div class="footer">
+            <div class="created-by">Created by</div>
+            <div class="footer-profile">
+                <img src="https://github.com/adityasiig.png" alt="Aditya Singh" class="profile-img">
+                <a href="https://adityasiig.github.io/Portfolio/" target="_blank">Aditya Singh</a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/js/app.js"></script>
+</body>
+</html> 
