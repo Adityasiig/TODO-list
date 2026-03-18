@@ -1,125 +1,118 @@
-# TODO List Application
+<div align="center">
 
-A simple and efficient TODO list application with a clean user interface. This project features both a static frontend for GitHub Pages and a Node.js backend for enhanced functionality.
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=120&section=header" width="100%" />
 
-## 🌟 Features
+# TaskFlow — Smart TODO App
 
-- Create, edit, and delete tasks
-- Mark tasks as complete/incomplete
-- Clean and responsive user interface
-- Data persistence using localStorage
-- Real-time updates
-- Mobile-friendly design
+A beautifully designed task manager with priorities, due dates, drag & drop, filters and dark/light themes.
 
-## 🔗 Live Demo
+[![Live Demo](https://img.shields.io/badge/Live_Demo-6C5CE7?style=for-the-badge&logo=googlechrome&logoColor=white)](https://adityasiig.github.io/TODO-list/)
+[![GitHub](https://img.shields.io/badge/Source_Code-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Adityasiig/TODO-list)
 
-Visit the live application: [TODO List App](https://adityasiig.github.io/TODO-list/)
+</div>
 
-## 🛠️ Technology Stack
+---
 
-### Frontend
-- HTML5
-- CSS3
-- JavaScript (ES6+)
-- Local Storage for data persistence
+## Features
 
-### Backend
-- Node.js
-- Express.js
-- JSON for data storage
+- **Dark / Light Theme** — Toggle with smooth transitions, saved to localStorage
+- **Task Priorities** — Low, Medium, High with color-coded indicators
+- **Due Dates** — Smart labels (overdue, due today, due tomorrow)
+- **Categories** — Personal, Work, Study, Health
+- **Search** — Real-time filtering across task text, category & priority
+- **Filter Tabs** — All, Active, Done, Overdue
+- **Sort Options** — Newest, Oldest, Priority, Due Date, Alphabetical
+- **Drag & Drop** — Reorder tasks by dragging
+- **Stats Dashboard** — Total, Done, Active, Overdue at a glance
+- **Progress Bar** — Visual completion percentage with shimmer animation
+- **Inline Editing** — Double-click any task to edit
+- **Sound Effects** — Subtle audio feedback on actions
+- **Confetti** — Celebration animation on task completion
+- **Keyboard Shortcuts** — `N` add, `/` search, `?` shortcuts, `Ctrl+Shift+D` theme
+- **Bulk Actions** — Clear completed or clear all
+- **Fully Responsive** — Works on all screen sizes
+- **XSS Protected** — All user input is sanitized before rendering
 
-## 📁 Project Structure
+## Tech Stack
+
+| Category | Technologies |
+|----------|-------------|
+| **Markup** | HTML5 |
+| **Styling** | CSS3 (Custom Properties, Grid, Flexbox, Animations, Glassmorphism) |
+| **Scripts** | Vanilla JavaScript (ES6+) |
+| **Fonts** | Inter, JetBrains Mono |
+| **Icons** | Font Awesome 6 |
+| **Storage** | localStorage |
+| **Backend** | Node.js, Express, EJS (server-side version) |
+
+## Project Structure
 
 ```
-T```
-live-demo-code/
-├── css/                            # Contains global styles (can be merged with public/css if needed)
-│   └── styles.css
-├── images/                         # Shared image assets used across the project
-│   ├── favicon-16.png
-│   ├── favicon-32.png
-│   ├── favicon-192.png
-│   ├── favicon-512.png
-│   ├── favicon.ico
-│   └── favicon.svg
-│
-├── js/                             # Standalone JavaScript files for general logic or components
-│   └── app.js
-│
-├── public/                         # Static files served directly to the client
+TODO-list/
+├── index.html                  # Main entry point (GitHub Pages)
+├── live-demo-code/
 │   ├── css/
-│   │   └── styles.css              # Public-facing CSS
-│   ├── images/                     # Public-facing images like favicons
-│   │   ├── favicon-16.png
-│   │   ├── favicon-32.png
-│   │   ├── favicon-192.png
-│   │   ├── favicon-512.png
-│   │   ├── favicon.ico
-│   │   └── favicon.svg
+│   │   └── styles.css          # Complete stylesheet with theme system
 │   ├── js/
-│   │   ├── app.js                  # Public-facing JavaScript
-│   │   └── main.js                 # Additional JS logic (e.g., interactivity)
-│   ├── app.html                    # Main HTML for PWA (Progressive Web App)
-│   └── manifest.json               # Web app manifest for PWA settings and metadata
-│
-├── server-side/                    # Server-side code (Node.js/Express logic)
-│   ├── data/
-│   │   └── todos.json              # Example data storage (could simulate a database)
+│   │   └── app.js              # All app logic and features
+│   ├── images/
+│   │   └── [favicons]
+│   └── app.html                # Standalone version
+├── server-side/
+│   ├── app.js                  # Express server
 │   ├── routes/
-│   │   └── todoRoutes.js           # API route handling for todo-related endpoints
-│   └── views/                      # Templating files using EJS for server-rendered views
-│       ├── error.ejs
-│       └── index.ejs
-│
-├── app.js                          # Main entry point for the server-side application (Express.js)
-├── index.html                      # Primary HTML file for the website (non-PWA entry)
-├── package.json                    # Project configuration and dependencies
-├── package-lock.json               # Locks dependency versions for reproducibility
-└── README.md                       # Project overview, instructions, and documentation
+│   │   └── todoRoutes.js       # API routes
+│   ├── views/
+│   │   └── index.ejs           # Server-rendered template
+│   └── data/
+│       └── todos.json          # JSON file storage
+├── package.json
+└── README.md
 ```
 
+## Getting Started
 
-## 🚀 Getting Started
+```bash
+# Clone the repository
+git clone https://github.com/Adityasiig/TODO-list.git
 
-### Static Version (Frontend Only)
-1. Visit [https://adityasiig.github.io/TODO-list/](https://adityasiig.github.io/TODO-list/)
-2. Start managing your tasks immediately
-3. Your data will be saved in your browser's localStorage
+# Open in browser (no build tools needed)
+cd TODO-list
+open index.html
+```
 
-### Local Development Setup
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Adityasiig/TODO-list.git
-   cd TODO-list
-   ```
+**Or** run the server-side version:
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+```bash
+npm install
+npm start
+# Visit http://localhost:3000
+```
 
-3. Start the server:
-   ```bash
-   npm start
-   ```
+## Keyboard Shortcuts
 
-4. Open your browser and visit:
-   - Frontend: [http://localhost:3000](http://localhost:3000)
+| Key | Action |
+|-----|--------|
+| `N` | Focus task input |
+| `/` | Focus search |
+| `?` | Show all shortcuts |
+| `Ctrl+Shift+D` | Toggle dark/light theme |
+| `Ctrl+Shift+X` | Clear completed tasks |
+| `Esc` | Close modal / clear search |
+| `Double-click` | Edit task text |
 
-## 👨‍💻 Author
+## Screenshots
 
-Created by [Aditya Singh](https://adityasiig.github.io/Portfolio/)
+| Dark Mode | Light Mode |
+|-----------|------------|
+| Aurora gradient background, glassmorphism cards | Clean light theme with purple accents |
 
-## 📄 License
+---
 
-This project is open source and available under the [MIT License](LICENSE).
+<div align="center">
 
-## 🤝 Contributing
+**Built by [Aditya Singh](https://adityasiig.github.io/Portfolio/)**
 
-Contributions are welcome! Feel free to:
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=80&section=footer" width="100%" />
 
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Open a Pull Request
+</div>
