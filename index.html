@@ -1,88 +1,234 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TODO List App</title>
-    <!-- Open Graph meta tags for link previews -->
-    <meta property="og:title" content="TODO List App">
-    <meta property="og:description" content="A beautiful and interactive TODO list application to manage your tasks">
-    <meta property="og:image" content="images/favicon-512.png">
+    <title>TaskFlow — Smart TODO App</title>
+    <meta property="og:title" content="TaskFlow — Smart TODO App">
+    <meta property="og:description" content="A beautifully designed task manager with priorities, due dates, filters & themes">
+    <meta property="og:image" content="live-demo-code/images/favicon-512.png">
     <meta property="og:url" content="https://adityasiig.github.io/TODO-list/">
     <meta property="og:type" content="website">
-    
-    <!-- Twitter card tags for Twitter link previews -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="TODO List App">
-    <meta name="twitter:description" content="A beautiful and interactive TODO list application to manage your tasks">
-    <meta name="twitter:image" content="images/favicon-512.png">
-    
-    <!-- Meta description for search engines -->
-    <meta name="description" content="A beautiful and interactive TODO list application to manage your tasks efficiently">
-    
+    <meta name="twitter:title" content="TaskFlow — Smart TODO App">
+    <meta name="twitter:description" content="A beautifully designed task manager with priorities, due dates, filters & themes">
+    <meta name="twitter:image" content="live-demo-code/images/favicon-512.png">
+    <meta name="description" content="TaskFlow — A beautifully designed task manager with priorities, due dates, drag & drop, filters and dark/light themes">
+
     <!-- Favicon -->
     <link rel="icon" href="live-demo-code/images/favicon.svg" type="image/svg+xml">
     <link rel="alternate icon" href="live-demo-code/images/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="live-demo-code/images/favicon-192.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="live-demo-code/images/favicon-192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="live-demo-code/images/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="live-demo-code/images/favicon-16.png">
-    <meta name="theme-color" content="#3498db">
+    <meta name="theme-color" content="#6c5ce7">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <link rel="stylesheet" href="live-demo-code/css/styles.css">
-    <link rel="manifest" href="live-demo-code/manifest.json">
 </head>
 <body>
-    <!-- Animated background bubbles -->
-    <div class="bubbles">
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-    </div>
-    
-    <!-- Animated background shapes -->
-    <div class="shapes">
-        <div class="shape shape-1"></div>
-        <div class="shape shape-2"></div>
-        <div class="shape shape-3"></div>
-        <div class="shape shape-4"></div>
+
+    <!-- Aurora Background -->
+    <div class="aurora-bg">
+        <div class="aurora-shape shape-1"></div>
+        <div class="aurora-shape shape-2"></div>
+        <div class="aurora-shape shape-3"></div>
     </div>
 
-    <div class="page-wrapper">
-        <div class="container">
-            <h1>TODO List</h1>
-            
-            <form id="todo-form" class="todo-form">
-                <input type="text" id="task-input" placeholder="Add a new task..." required>
-                <button type="submit">Add</button>
-            </form>
-            
-            <div id="todo-list" class="todo-list">
-                <p class="empty-message">No tasks yet. Add a task to get started!</p>
+    <div class="app-wrapper">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <div class="logo">
+                    <i class="fas fa-bolt"></i>
+                    <span>TaskFlow</span>
+                </div>
             </div>
-            
-            <!-- Task summary section -->
-            <div id="task-summary" class="task-summary fade-in" style="display: none; margin-top: 20px; padding: 15px; background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(46, 204, 113, 0.1)); border-radius: var(--radius); text-align: center; backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.3);">
-                <p><span id="completed-count">0</span> completed / <span id="total-count">0</span> total tasks</p>
-                <div id="progress-bar" style="height: 6px; background: rgba(255, 255, 255, 0.3); border-radius: 3px; margin-top: 8px; overflow: hidden;">
-                    <div id="progress" style="height: 100%; width: 0%; background: var(--success-color); transition: width 0.5s ease;"></div>
+            <div class="header-right">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+                <button class="shortcuts-btn" id="shortcuts-btn" aria-label="Keyboard shortcuts">
+                    <i class="fas fa-keyboard"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar" id="stats-bar">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-list-check"></i></div>
+                <div class="stat-info">
+                    <span class="stat-number" id="stat-total">0</span>
+                    <span class="stat-label">Total</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon completed-icon"><i class="fas fa-circle-check"></i></div>
+                <div class="stat-info">
+                    <span class="stat-number" id="stat-completed">0</span>
+                    <span class="stat-label">Done</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon active-icon"><i class="fas fa-spinner"></i></div>
+                <div class="stat-info">
+                    <span class="stat-number" id="stat-active">0</span>
+                    <span class="stat-label">Active</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon overdue-icon"><i class="fas fa-clock"></i></div>
+                <div class="stat-info">
+                    <span class="stat-number" id="stat-overdue">0</span>
+                    <span class="stat-label">Overdue</span>
                 </div>
             </div>
         </div>
-        
-        <!-- Footer with website link and profile -->
-        <div class="footer">
-            <div class="created-by">Created by</div>
-            <div class="footer-profile">
-                <img src="https://github.com/adityasiig.png" alt="Aditya Singh" class="profile-img">
-                <a href="https://adityasiig.github.io/Portfolio/" target="_blank">Aditya Singh</a>
+
+        <!-- Progress Bar -->
+        <div class="progress-container" id="progress-container">
+            <div class="progress-info">
+                <span id="progress-text">0% complete</span>
+                <span id="progress-fraction">0/0</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- Add Task Form -->
+        <form class="add-task-form" id="add-task-form">
+            <div class="form-main">
+                <input type="text" id="task-input" placeholder="What needs to be done?" autocomplete="off" required>
+                <button type="submit" class="add-btn" aria-label="Add task">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+            <div class="form-options">
+                <div class="option-group">
+                    <label class="option-label"><i class="fas fa-flag"></i> Priority</label>
+                    <div class="priority-pills" id="priority-pills">
+                        <button type="button" class="priority-pill" data-priority="low">Low</button>
+                        <button type="button" class="priority-pill active" data-priority="medium">Med</button>
+                        <button type="button" class="priority-pill" data-priority="high">High</button>
+                    </div>
+                </div>
+                <div class="option-group">
+                    <label class="option-label"><i class="fas fa-calendar"></i> Due</label>
+                    <input type="date" id="due-date" class="due-date-input">
+                </div>
+                <div class="option-group">
+                    <label class="option-label"><i class="fas fa-tag"></i> Category</label>
+                    <select id="category-select" class="category-select">
+                        <option value="personal">Personal</option>
+                        <option value="work">Work</option>
+                        <option value="study">Study</option>
+                        <option value="health">Health</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+
+        <!-- Toolbar: Search + Filters -->
+        <div class="toolbar">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" placeholder="Search tasks...">
+                <button class="search-clear" id="search-clear" style="display:none;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="filter-tabs" id="filter-tabs">
+                <button class="filter-tab active" data-filter="all">All</button>
+                <button class="filter-tab" data-filter="active">Active</button>
+                <button class="filter-tab" data-filter="completed">Done</button>
+                <button class="filter-tab" data-filter="overdue">Overdue</button>
+            </div>
+            <div class="sort-dropdown">
+                <button class="sort-btn" id="sort-btn">
+                    <i class="fas fa-arrow-down-short-wide"></i>
+                    <span>Sort</span>
+                </button>
+                <div class="sort-menu" id="sort-menu">
+                    <button class="sort-option active" data-sort="newest">Newest First</button>
+                    <button class="sort-option" data-sort="oldest">Oldest First</button>
+                    <button class="sort-option" data-sort="priority">Priority</button>
+                    <button class="sort-option" data-sort="due-date">Due Date</button>
+                    <button class="sort-option" data-sort="alphabetical">A → Z</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task List -->
+        <div class="task-list-container">
+            <ul class="task-list" id="task-list"></ul>
+            <div class="empty-state" id="empty-state">
+                <div class="empty-icon"><i class="fas fa-clipboard-list"></i></div>
+                <h3>No tasks yet</h3>
+                <p>Add your first task to get started!</p>
+            </div>
+            <div class="no-results" id="no-results" style="display:none;">
+                <div class="empty-icon"><i class="fas fa-search"></i></div>
+                <h3>No matches found</h3>
+                <p>Try a different search or filter</p>
+            </div>
+        </div>
+
+        <!-- Bulk Actions -->
+        <div class="bulk-actions" id="bulk-actions" style="display:none;">
+            <button class="bulk-btn clear-completed-btn" id="clear-completed">
+                <i class="fas fa-broom"></i> Clear Completed
+            </button>
+            <button class="bulk-btn clear-all-btn" id="clear-all">
+                <i class="fas fa-trash-alt"></i> Clear All
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="footer-content">
+                <span>Built by</span>
+                <a href="https://adityasiig.github.io/Portfolio/" target="_blank" rel="noopener">
+                    <img src="https://github.com/adityasiig.png" alt="Aditya Singh" class="footer-avatar">
+                    Aditya Singh
+                </a>
+            </div>
+            <div class="footer-shortcuts">
+                Press <kbd>N</kbd> to add &middot; <kbd>?</kbd> for shortcuts
+            </div>
+        </footer>
+    </div>
+
+    <!-- Keyboard Shortcuts Modal -->
+    <div class="modal-overlay" id="shortcuts-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-keyboard"></i> Keyboard Shortcuts</h3>
+                <button class="modal-close" id="modal-close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="shortcut-row"><kbd>N</kbd> <span>Focus task input</span></div>
+                <div class="shortcut-row"><kbd>?</kbd> <span>Show shortcuts</span></div>
+                <div class="shortcut-row"><kbd>Ctrl+Shift+D</kbd> <span>Toggle theme</span></div>
+                <div class="shortcut-row"><kbd>Ctrl+Shift+X</kbd> <span>Clear completed</span></div>
+                <div class="shortcut-row"><kbd>/</kbd> <span>Focus search</span></div>
+                <div class="shortcut-row"><kbd>Esc</kbd> <span>Close modal / clear search</span></div>
+                <div class="shortcut-row"><kbd>Double-click</kbd> <span>Edit task text</span></div>
             </div>
         </div>
     </div>
-    
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
     <script src="live-demo-code/js/app.js"></script>
 </body>
-</html> 
+</html>
